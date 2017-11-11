@@ -38,7 +38,7 @@ request('http://9300realty.com/index.cfm?page=allRentals', function (error, resp
 
 	   //async.map passes an array, a function, then callback
 
-
+// I should rename this funtion to something more descriptive
 var myfunc = (item, cb) => {
 	console.log(item);
 	request(item.url, (err, response, body) => {   	
