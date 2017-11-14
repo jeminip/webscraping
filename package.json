@@ -4,11 +4,15 @@
   "description": "",
   "main": "scraping.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "phantom-sequence": "node -e 'require(\"./phantom-scraper/index.js\").phantom(true)'",
+    "phantom-dump": "node -e 'require(\"./phantom-scraper/index.js\").phantom(false)'"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "~4.16.1"
+    "cheerio": "^1.0.0-rc.2",
+    "express": "~4.16.1",
+    "phantom": "^4.0.5"
   }
 }
