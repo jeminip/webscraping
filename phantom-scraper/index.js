@@ -1,10 +1,14 @@
 /*jshint esversion: 6 */
 // ^^ this is for the 'linters' (text editor plugin thing - ignore it)
 
+// run this module in the command line by typing:
+// 		1. 'npm run phantom-sequence' => runs sequentially
+// OR
+// 		2. 'npm run phantom-dump' => runs concurrently
+
 // set module dependencies
 const cheerio = require('cheerio');
 const fs = require('fs');
-// you must have phantom running on your computer for this to work
 const phantom = require('phantom');
 const request = require('request');
 
