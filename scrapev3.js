@@ -39,19 +39,20 @@ request('http://9300realty.com/index.cfm?page=allRentals', function (error, resp
 	   //async.map passes an array, a function, then callback
 
 // I should rename this funtion to something more descriptive
+// (like "scrape")
 var myfunc = (item, cb) => {
 	console.log(item);
 	request(item.url, (err, response, body) => {   	
   		if (!err && response.statusCode == 200) {
 			var $ = cheerio.load(body);
-	   		$('.mainImage').each(function(i, element){
-	   			console.log(i);
-	   		 	var imgID = $(element).find('img');
-	   		 	var img = imgID.attr('src');
+	   		$('.thumb').each(function(i, element){
+	   			//console.log(i);
+	   		 	var imgID = $(element).find('a');
+	   		 	var img = $(imgID).attr('href');
 
 	   			//test.data = body;
 	   			console.log (img);
-	   			item.img = img;
+	   			//item.img = img;
 	   		})
 		   	return cb(null, item);
 		}
