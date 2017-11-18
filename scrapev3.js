@@ -51,9 +51,20 @@ var myfunc = (item, cb) => {
 	   		 	var img = $(imgID).attr('href');
 
 	   			//test.data = body;
-	   			console.log (img);
-	   			//item.img = img;
+	   			//console.log (img);
+	   			//item.img = img;	   		
+
 	   		})
+
+	   		$('#details_layout').each(function(i, element) {
+	   			
+	   			var listingDetails = $(element).find('p').attr;
+
+	   			console.log(listingDetails);
+
+	   		})
+
+
 		   	return cb(null, item);
 		}
 		else {
