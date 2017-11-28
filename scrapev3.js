@@ -28,6 +28,7 @@ request('http://9300realty.com/index.cfm?page=allRentals', function (error, resp
 	   	test.push(listing);
 
 	   	});
+
 	   async.map(test, myfunc, doneFunc) 
 
 	}
@@ -40,8 +41,10 @@ request('http://9300realty.com/index.cfm?page=allRentals', function (error, resp
 
 // I should rename this funtion to something more descriptive
 // (like "scrape")
+
+//item being called from array "test" based on asycn mapping above
 var myfunc = (item, cb) => {
-	console.log(item);
+	//console.log(item);
 	request(item.url, (err, response, body) => {   	
   		if (!err && response.statusCode == 200) {
 			var $ = cheerio.load(body);
@@ -52,15 +55,17 @@ var myfunc = (item, cb) => {
 
 	   			//test.data = body;
 	   			//console.log (img);
-	   			//item.img = img;	   		
+	   			item.img = img;	   		
 
 	   		})
 
 	   		$('#details_layout').each(function(i, element) {
 	   			
-	   			var listingDetails = $(element).find('p').attr;
+	   			var listingDetails = $(element).find('p').html();
 
-	   			console.log(listingDetails);
+	   			item.listingDetails = listingDetails;
+
+	   			//console.log(listingDetails);
 
 	   		})
 
