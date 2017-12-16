@@ -45,7 +45,9 @@ request('http://9300realty.com/index.cfm?page=allRentals', function (error, resp
 //item being called from array "test" based on asycn mapping above
 var myfunc = (item, cb) => {
 	//console.log(item);
-	request(item.url, (err, response, body) => {   	
+
+	request(item.url, (err, response, body) => {
+		console.log('item url: ', item.url);
   		if (!err && response.statusCode == 200) {
 			var $ = cheerio.load(body);
 	   		$('.thumb').each(function(i, element){
@@ -65,10 +67,12 @@ var myfunc = (item, cb) => {
 
 	   		$('.essentials').each(function(i, element) {
 	   			
-	   			var details = $(element).find('span').text();
-	   			
-	   			console.log (details);
-
+	   			var detail = $(element).find('span').text();
+	   			const detailHtml = $(element).html();
+	   			const startIndex = (detailHtml.indexOf('</span>') > -1) && detailHtml.indexOf('</span>') + '</span>'.length || 0;
+	   			var detailValue = startIndex ? detailHtml.substring(startIndex).trim() : detailHtml.trim();
+	   			if (detail) console.log(detail, detailValue);
+	   			else console.log('- ' + detailValue);
 	   		})
 
 
