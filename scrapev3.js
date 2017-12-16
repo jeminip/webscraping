@@ -53,19 +53,21 @@ var myfunc = (item, cb) => {
 	   		 	var imgID = $(element).find('a');
 	   		 	var img = $(imgID).attr('href');
 
-	   			//test.data = body;
-	   			//console.log (img);
 	   			item.img = img;	   		
-
 	   		})
 
 	   		$('#details_layout').each(function(i, element) {
 	   			
 	   			var listingDetails = $(element).find('p').html();
-
 	   			item.listingDetails = listingDetails;
 
-	   			//console.log(listingDetails);
+	   		})
+
+	   		$('.essentials').each(function(i, element) {
+	   			
+	   			var details = $(element).find('span').text();
+	   			
+	   			console.log (details);
 
 	   		})
 
@@ -79,7 +81,7 @@ var myfunc = (item, cb) => {
 };
 
 var doneFunc = (err, results) => {
-	console.log(results);
+	//console.log(results);
 	// console.log (test.img);
 	console.log('help me') 
 };
