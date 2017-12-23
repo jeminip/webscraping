@@ -2,42 +2,36 @@
 var request = require('request');
 //loading cheerio
 var cheerio = require('cheerio');
-
 //loading async
 var async = require('async');
+
+const model = require('./mysql-storage/model');
 
 /*requesting website, if there's no error then creating a variable "$" and passing elements through cheerio to pull out information */
 var test =[];
 request('http://9300realty.com/index.cfm?page=allRentals', function (error, response, html) {
-  if (!error && response.statusCode == 200) {
+  	if (!error && response.statusCode == 200) {
  
-    var $ = cheerio.load(html);
-	   $('.dspListings2Elements').each(function(i, element){
-
-	   	//going to the <b> and then <a> tags within dspListings2Elements
-	   	var address = $(element).find('b a');
-
-	   	//taking the info from the <a> tag and assigning them as properties to the "listngs" variable
-	   	var listing = {
-	   		url: 'http://www.9300realty.com/'+address.attr('href'),
-	   		street: address.text()
-	   	}
-	
-	//taking the properties from each listing and putting them into an array defined at the    	
-	   	
-	   	test.push(listing);
-
+    	var $ = cheerio.load(html);
+	   	$('.dspListings2Elements').each(function(i, element){
+	   		//going to the <b> and then <a> tags within dspListings2Elements
+	   		var address = $(element).find('b a');
+	   		//taking the info from the <a> tag and assigning them as properties to the "listngs" variable
+	   		var listing = {
+	   			url: 'http://www.9300realty.com/'+address.attr('href'),
+	   			street: address.text()
+	   		}
+			//taking the properties from each listing and putting them into an array defined at the
+	   		test.push(listing);
 	   	});
-
-	   async.map(test, myfunc, doneFunc) 
-
+	    async.map(test, myfunc, doneFunc) 
 	}
-  		else {
+  	else {
   		console.log(err)
   	}
 });
 
-	   //async.map passes an array, a function, then callback
+//async.map passes an array, a function, then callback
 
 // I should rename this funtion to something more descriptive
 // (like "scrape")
@@ -79,18 +73,15 @@ var myfunc = (item, cb) => {
 		   	return cb(null, item);
 		}
 		else {
-			console.log(err)
+			console.log(err);
 		}
-	}); 		
+	});
 };
 
 var doneFunc = (err, results) => {
-	//console.log(results);
-	// console.log (test.img);
-	console.log('help me') 
+	// save all listings
+	const added = results.map(result => model.addProperty(result));
+	Promise.all(added).then(allAdded => {
+		console.log('added everything: ', allAdded);
+	});
 };
-
-
-
-	 
-
